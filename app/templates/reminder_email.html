@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        /* Use inline CSS for compatibility */
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .email-body {
+            padding: 20px;
+            background-color: white;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .email-footer {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Task Reminder</h1>
+        </div>
+        <div class="email-body">
+            <h2>Hello, {{ user.username }}!</h2>
+            <p>This is a reminder for:</p>
+            <div style="border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+                <h3>{{ task.title }}</h3>
+                <p><strong>Task Description:</strong> {{ task.description }}</p>
+                <p><strong>Start Date:</strong> {{ task.start_date }}</p>
+                <p><strong>Due Date:</strong> {{ task.due_date }}</p>
+            </div>
+            <a href="{{ task_url }}" class="btn">View Task</a>
+        </div>
+        <div class="email-footer">
+            <p>Thank you for using Uplanner!</p>
+        </div>
+    </div>
+</body>
+</html>

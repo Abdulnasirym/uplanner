@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+	<form method="POST" action="{{ url_for('auth.register') }}">
+		{{ form.hidden_tag() }}
+		<div>
+			{{ form.username.label(class="form-label") }}<br>
+			{{ form.username(class="form-control") }}<br>
+		</div>
+		<div>
+			{{ form.email.label(class="form-label") }}<br>
+			{{ form.email(class="form-control") }}<br>
+		</div>
+		<div>
+			{{ form.password.label(class="form-label") }}<br>
+			{{ form.password(class="form-control") }}<br>
+		</div>
+		<div>
+			{{ form.confirm_password.label(class="form-label") }}<br>
+			{{ form.confirm_password(class="form-control") }}<br>
+		</div>
+		<div class="d-flex justify-content-start align-items-center">
+			<div style="margin-right: 10px;">
+			{{ form.submit(class="btn btn-primary") }}
+			</div><br>
+			<a href="{{ url_for('auth.login') }}">
+	        <button class="btn btn-primary" type="button">Login</button>
+	    </a><br>
+		</div>
+	</form>
+{% endblock %}
