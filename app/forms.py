@@ -1,17 +1,38 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, IntegerField, SubmitField, DateTimeField, BooleanField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from flask_login import current_user
+from app.models import User
 
 class Registration(FlaskForm):
+	firstname = StringField('firstname: ', validators=[DataRequired()])
+	lastname = StringField('lastname: ', validators=[DataRequired()])
 	username = StringField('Username: ', validators=[DataRequired()])
 	email = StringField('Email: ', validators=[DataRequired(), Email()])
+	phone = StringField('Phone: ', validators=[DataRequired()])
 	password = PasswordField('Password: ', validators=[DataRequired()])
 	confirm_password = PasswordField('Confirm password: ', validators=[DataRequired(), EqualTo('password')])
 	submit = SubmitField('sign Up')
 
-	# def validate_password(self, field):
-	# 	if len(field.data) < 8:
-	# 		raise ValidationError('Password must be at least 8 characters long.')
+class EditProfileForm(FlaskForm):
+	firstname = StringField('First Name', validators=[DataRequired()])
+	lastname = StringField('Last Name', validators=[DataRequired()])
+	username = StringField('Username', validators=[DataRequired()])
+	email = StringField('Email', validators=[DataRequired()])
+	phone = StringField('Phone', validators=[DataRequired()])
+	submit =SubmitField('Update Profile')
+
+	def validate_username(self, username):
+		if username.data != current_user.username:
+			user = User.query.filter_by(username=username.data).first()
+			if user:
+				raise ValidationError('Username has already been taken.')
+
+	def validate_email(self, email):
+		if email.data != current_user.email:
+			user = User.query.filter_by(email=email.data).first()
+			if user:
+				raise ValidationError('Email already exist')
 
 class LoginForm(FlaskForm):
 	username = StringField('Username: ', validators=[DataRequired()])

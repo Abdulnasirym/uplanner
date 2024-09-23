@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, url_for, flash, redirect
+from flask import request, Blueprint, render_template, url_for, flash, redirect
 from app import db
-from app.forms import Registration, LoginForm, LogoutForm, TaskForm
+from app.forms import EditProfileForm, Registration, LoginForm, LogoutForm, TaskForm
 from app.models import User, Task, Reminder
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
@@ -12,25 +12,92 @@ from datetime import timedelta
 # Define the blueprint
 auth_bp = Blueprint('auth', __name__)
 
-# # Testing email sending functionality
-# @auth_bp.route('/dashboard/test-email')
-# @login_required
-# def task_reminder():
-# 	subject = "Test Email"
-# 	recipient = "bitwebtechnologies@gmail.com"
+# Testing email sending functionality
+@auth_bp.route('/dashboard/test-email')
+@login_required
+def task_reminder():
+    subject = "Test Email"
+    recipient = "bitwebtechnologies@gmail.com"
+    
+    try:
+        # Fetch a sample task and reminder date (You can fetch based on your logic)
+        task = Task.query.filter_by(user_id=current_user.id).first()  # Fetch a task for the current user
+        reminder_date = task.due_date - timedelta(days=1)  # Set the reminder date to one day before the due date
 
-# 	try:
-# 		print("Calling send_email function...")
-# 		send_task_reminder(current_user, task, reminder_date)
-# 		print("Email sending function called successfully.")
-# 		return "Test email sent successfully"
-# 	except Exception as e:
-# 		print(f"An error occurred: {e}")
-# 		return f"An error occurred: {str(e)}"
+        if task:
+            print("Calling send_email function...")
+            send_task_reminder(current_user, task, reminder_date)  # Pass the task and reminder date
+            print("Email sending function called successfully.")
+            return "Test email sent successfully"
+        else:
+            return "No task found to send reminder."
+    
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return f"An error occurred: {str(e)}"
+
 
 # User registration route
-@auth_bp.route('/index')
+
+@auth_bp.route('/profile')
+def profile():
+	form = Registration()
+	return render_template('profile.html', user=current_user)
+
+
+@auth_bp.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+	user = current_user
+	form = EditProfileForm(obj=user)
+
+	if form.validate_on_submit():
+		# Checks if username, email or phone number already exist
+		existing_user = User.query.filter(User.username == form.username.data, User.id != user.id).first()
+		existing_email = User.query.filter(User.email == form.email.data, User.id != user.id).first()
+		existing_phone = User.query.filter(User.phone == form.phone.data, User.id != user.id).first()
+
+		# Checks if phone number is already in use by another user
+		if existing_phone:
+			flash('Phone number already registered. Please use a different phone number', 'danger')
+			return redirect(url_for('auth.edit_profile'))
+
+
+		# Checks if username is already taken by another user
+		if existing_user:
+			flash('Username already exist, Please choose a different username', 'danger')
+			return redirect(url_for('auth.edit_profile'))
+
+		# Checks if email is already taken by another user
+		if existing_email:
+			flash('Email already exist. Please use a different email', 'danger')
+			return redirect(url_for('auth.edit_profile'))
+
+		# Update the user's details
+		user.firstname = form.firstname.data
+		user.lastname = form.lastname.data
+		user.username = form.username.data
+		user.email = form.email.data
+		user.phone = form.phone.data
+
+		# Commit changes to the database
+		db.session.commit()
+		flash('Profile updated successfully!', 'success')
+		return redirect(url_for('auth.profile'))
+
+	if form.errors:
+		print("Form Errors:", form.errors)
+
+	print(form.data)
+
+
+	return render_template('edit_profile.html', form=form)
+
 @auth_bp.route('/')
+@auth_bp.route('/home', methods=['GET'])
+def home():
+	return render_template('landing_page.html')
+
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
 	form = Registration()
@@ -43,6 +110,8 @@ def register():
 		# Check if username or email already exist
 		existing_user = User.query.filter_by(username=form.username.data).first()
 		existing_email = User.query.filter_by(email=form.email.data).first()
+		existing_phone = User.query.filter_by(phone=form.phone.data).first()
+
 
 		if existing_user:
 			flash('Username already exist, Please choose a different username', 'danger')
@@ -52,8 +121,19 @@ def register():
 			flash('Email already exist. Please use a different email', 'danger')
 			return redirect(url_for('auth.register'))
 
+		if existing_phone:
+			flash('Phone number already registered. Please use a different phone number', 'danger')
+			return redirect(url_for('auth.register'))
+
 		hashed_password = generate_password_hash(form.password.data)
-		user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password)
+		user = User(
+			firstname=form.firstname.data,
+			lastname=form.lastname.data,
+			username=form.username.data,
+			email=form.email.data,
+			phone=form.phone.data,
+			password_hash=hashed_password
+		)
 		db.session.add(user)
 		db.session.commit()
 		flash('Your account has been created', 'success')

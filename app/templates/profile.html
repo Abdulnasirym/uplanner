@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+<div class="card">
+  <div class="card-header">
+    <strong>{{ user.username }}'s Profile</strong>
+  </div>
+  <div class="card-body">
+  	<p class="card-text"><strong>Firstname:</strong> {{ user.firstname }}</p>
+    <p class="card-text"><strong>Lastname:</strong> {{ user.lastname }}</p>
+    <p class="card-text"><strong>Username:</strong> {{ user.username }}</p>
+    <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+    <p class="card-text"><strong>Phone number:</strong> {{ user.phone }}</p>
+    <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-secondary">Edit Profile</a>
+    <a href="{{ url_for('auth.dashboard') }}" class="btn btn-primary">Dashboard</a>
+  </div>
+</div>
+
+{% endblock %}

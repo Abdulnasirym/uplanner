@@ -3,12 +3,12 @@
 {% block title %}Edit task{% endblock %}
 
 {% block content %}
-    <h1>Edit Task</h1>
+<h1>Edit Task</h1>
     
-    <form method="post" action="{{ url_for('auth.edit_task', task_id=task.id) }}">
-        {{ form.hidden_tag() }}
-        <div>
-            {{ form.title.label(class="form-label") }}<br>
+<form method="post" action="{{ url_for('auth.edit_task', task_id=task.id) }}">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.title.label(class="form-label") }}<br>
             {{ form.title(class="form-control") }}<br>
         </div>
         <div>
@@ -27,16 +27,14 @@
             {{ form.reminder_time.label(class="form-label") }}<br>
             {{ form.reminder_time(class="form-control") }}<br>
         </div>
-    </form>
-    <div class="d-flex justify-content-start align-items-center">
-        <div>
-            <button class="btn btn-secondary" type="submit" style="margin-right: 10px;">Update task</button>
-        </div>
-        <form method="POST" action="{{ url_for('auth.delete_task', task_id=task.id) }}">
-            <button style="margin-right: 10px; height: 100%;" class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this task?')">Delete task</button>
-        </form>
-        <a href="{{ url_for('auth.dashboard') }}">
-            <button class="btn btn-primary" type="button">Dashboard</button>
-        </a>
+        <div class="d-flex justify-content-start align-items-center">
+            <button class="btn btn-secondary" type="submit" style="margin-right: 10px;">Update Task</button>
+            <form method="POST" action="{{ url_for('auth.delete_task', task_id=task.id) }}">
+                <button style="margin-right: 10px; height: 100%;" class="btn btn-danger" type="submit" onclick="return confirm('Are you sure you want to delete this task?')">Delete task</button>
+            </form>
+            <a href="{{ url_for('auth.dashboard') }}">
+                <button class="btn btn-primary" type="button">Dashboard</button>
+            </a>
     </div>
+</form>
 {% endblock %}

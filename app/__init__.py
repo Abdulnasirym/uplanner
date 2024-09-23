@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
-from .celery import make_celery
+# from .celery import make_celery
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -12,7 +12,7 @@ login_manager = LoginManager()
 mail = Mail()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='templates/static')
     app.config.from_object('config.Config')
 
     # Initialize extensions with app
@@ -38,7 +38,7 @@ def create_app():
         CELERY_RESULT_BACKEND='redis://localhost:6379/0'
     )
 
-    celery = make_celery(app)
+    # celery = make_celery(app)
 
     mail.init_app(app)
 

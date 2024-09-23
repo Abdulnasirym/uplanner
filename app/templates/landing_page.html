@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}home{% endblock %}
+
+{% block landing %}
+
+<section class="cover-section custom-container">
+  <div class="cover-image">
+    <h1>TASK PLANNER</h1>
+    <p>your best planner</p>
+    <a href="#" class="btn btn-primary" id="bt">Explore App</a>
+  </div>
+</section>
+
+<h1 class="features-heading">Features</h1>
+<section class="features-section" id="features">
+  <div class="card" style="width: 20rem;">
+    <img src="static/images/task-management.jpg" class="card-img-top" alt="A task manager picture with clients">
+    <div class="card-body">
+      <h5 class="card-title">Task Management and Organization</h5>
+      <p class="card-text">Users can easily manage their tasks by adding new ones, editing existing ones, or removing completed tasks. This feature includes setting due dates, adding descriptions, and prioritizing tasks to ensure important items are completed on time.</p>
+    </div>
+  </div>
+  <div class="card" style="width: 20rem;">
+    <img src="static/images/reminder.png" class="card-img-top" class="card-img-top" alt="A bell for notification">
+    <div class="card-body">
+      <h5 class="card-title">Reminders and Notification</h5>
+      <p class="card-text">The app sends timely reminders and notifications to help users stay on track with their deadlines. Users can customize reminder settings to receive alerts via email or push notifications, ensuring they never miss a due date.</p>
+    </div>
+  </div>
+  <div class="card" style="width: 20rem;">
+    <img src="static/images/user-friendly.jpg" class="card-img-top" alt="An app viewed on a tablet to show friendly user interface">
+    <div class="card-body">
+      <h5 class="card-title">User Friendly Interface</h5>
+      <p class="card-text">The app features a clean and intuitive interface that adapts to various devices, including desktops, tablets, and smartphones. The user-friendly design ensures that users can navigate the app easily, view tasks, and access features without confusion.</p>
+    </div>
+  </div>
+</section>
+
+<div id="about"></div><br><br>
+<h1 class="about-heading">About</h1>
+<section class="About-section about">
+  <div class="card about-card" style="width: 65rem;">
+    <div class="card-body">
+      <p class="card-text">The inspiration for creating this Task Planner app stems from my personal struggle with managing multiple commitments effectively. As a software engineering student at Holberton School, juggling coursework, coding projects, personal errands, and even moments of relaxation became overwhelming. I often found myself missing deadlines, forgetting tasks, or feeling stressed over time management.<br><br>
+
+      One particular moment that sparked the need for a solution was during a hectic week where I missed an important project submission due to a lack of proper planning. This incident made me realize the value of having a tool that could help me track tasks, set reminders, and give me a sense of control over my schedule.<br><br>
+
+      That experience led to the idea of building a simple yet effective task management tool. With this Task Planner, I aimed to create something that could help not only me but others who face similar challenges. I wanted to build a tool that was easy to use, intuitive, and kept users on top of their tasks by sending timely reminders. As part of my Portfolio Project for Holberton School, this app became an opportunity to put into practice the skills I’ve learned, while solving a real-world problem that resonates with me personally.<br><br>
+
+      Though this project was a requirement for my coursework, it is much more than that. It’s a tool I would use myself, and I hope it can be valuable for others who are looking to simplify their daily workflow.<br><br>
+
+      You can find out more about my journey and the project here:
+
+      GitHub Repository
+      Team Members & Social Links:
+      Although this is a solo project, here are my profiles for you to follow my work:<br>
+
+      LinkedIn: <a href="https://www.linkedin.com/in/abdulnasirym/" target="blank">linkedin</a><br>
+      GitHub: <a href="https://github.com/abdulnasirym/" target="blank">github</a><br>
+      Twitter: <a href="https://x.com/bitweb_tech" target="blank">twitter</a><br><br>
+      The Task Planner app represents not just a step in my growth as a developer, but a personal tool that solves a real problem I faced in my journey. I hope you find it as useful as I do!
+</p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -3,8 +3,18 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
+
+<h2>Register</h2><br>
 	<form method="POST" action="{{ url_for('auth.register') }}">
 		{{ form.hidden_tag() }}
+		<div>
+			{{ form.firstname.label(class="form-label") }}<br>
+			{{ form.firstname(class="form-control") }}<br>
+		</div>
+		<div>
+			{{ form.lastname.label(class="form-label") }}<br>
+			{{ form.lastname(class="form-control") }}<br>
+		</div>
 		<div>
 			{{ form.username.label(class="form-label") }}<br>
 			{{ form.username(class="form-control") }}<br>
@@ -12,6 +22,10 @@
 		<div>
 			{{ form.email.label(class="form-label") }}<br>
 			{{ form.email(class="form-control") }}<br>
+		</div>
+		<div>
+			{{ form.phone.label(class="form-label") }}<br>
+			{{ form.phone(class="form-control") }}<br>
 		</div>
 		<div>
 			{{ form.password.label(class="form-label") }}<br>
