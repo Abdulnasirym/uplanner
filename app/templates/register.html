@@ -4,6 +4,7 @@
 
 {% block content %}
 
+<!-- user registration form fields -->
 <h2>Register</h2><br>
 	<form method="POST" action="{{ url_for('auth.register') }}">
 		{{ form.hidden_tag() }}

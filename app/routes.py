@@ -39,18 +39,20 @@ def task_reminder():
 
 # User registration route
 
+# user profile route
 @auth_bp.route('/profile')
 def profile():
 	form = Registration()
 	return render_template('profile.html', user=current_user)
 
-
+# edit profile
 @auth_bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
 	user = current_user
 	form = EditProfileForm(obj=user)
 
+	# validates form
 	if form.validate_on_submit():
 		# Checks if username, email or phone number already exist
 		existing_user = User.query.filter(User.username == form.username.data, User.id != user.id).first()
@@ -93,14 +95,17 @@ def edit_profile():
 
 	return render_template('edit_profile.html', form=form)
 
+# landing page
 @auth_bp.route('/')
 @auth_bp.route('/home', methods=['GET'])
 def home():
 	return render_template('landing_page.html')
 
+# user registration
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
 	form = Registration()
+	# ensures content in both password fields match
 	if form.password.data != form.confirm_password.data:
 			flash('Passwords do not match', 'danger')
 			print("Passwords do not match")
@@ -112,19 +117,22 @@ def register():
 		existing_email = User.query.filter_by(email=form.email.data).first()
 		existing_phone = User.query.filter_by(phone=form.phone.data).first()
 
-
+		# checks if a user exist with the same username
 		if existing_user:
 			flash('Username already exist, Please choose a different username', 'danger')
 			return redirect(url_for('auth.register'))
 
+		# checks if a user exist with the same email
 		if existing_email:
 			flash('Email already exist. Please use a different email', 'danger')
 			return redirect(url_for('auth.register'))
 
+		# checks if a user exist with the same phone numeber
 		if existing_phone:
 			flash('Phone number already registered. Please use a different phone number', 'danger')
 			return redirect(url_for('auth.register'))
 
+		# hashed password entered by the users
 		hashed_password = generate_password_hash(form.password.data)
 		user = User(
 			firstname=form.firstname.data,
@@ -134,7 +142,9 @@ def register():
 			phone=form.phone.data,
 			password_hash=hashed_password
 		)
+		# add user
 		db.session.add(user)
+		# push user to database
 		db.session.commit()
 		flash('Your account has been created', 'success')
 		return redirect(url_for('auth.login'))
@@ -176,12 +186,14 @@ def add_task():
 @login_required
 def edit_task(task_id):
 	task = Task.query.get_or_404(task_id)
+	# checks if the current user has the authority to edit task
 	if task.user_id != current_user.id:
 		flash('You are not authorized to edit this task,', 'danger')
 		return redirect(url_for('auth.dashboard'))
 
 	form = TaskForm(obj=task)
 
+	# validate form
 	if form.validate_on_submit():
 		task.title = form.title.data
 		task.description = form.description.data
@@ -202,6 +214,7 @@ def edit_task(task_id):
 @login_required
 def delete_task(task_id):
 	task = Task.query.get_or_404(task_id)
+	# checks if the current user has the authority to delete task
 	if task.user_id != current_user.id:
 		flash('you are not authorized to delete this task', 'danger')
 		return redirect(url_for('auth.dahboard'))
@@ -249,8 +262,10 @@ def toggle_complete(task_id):
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
 	form = LoginForm()
+	# validate form
 	if form.validate_on_submit():
 		user = User.query.filter_by(username=form.username.data).first()
+		# check is username and password entered match
 		if user and check_password_hash(user.password_hash, form.password.data):
 			login_user(user)
 			flash('Logged in successfully!', 'success')

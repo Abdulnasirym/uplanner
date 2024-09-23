@@ -6,20 +6,25 @@
 <h1>Edit Task</h1>
     
 <form method="post" action="{{ url_for('auth.edit_task', task_id=task.id) }}">
+    <!-- CSRF token -->
     {{ form.hidden_tag() }}
     <div>
+        <!-- task title -->
         {{ form.title.label(class="form-label") }}<br>
             {{ form.title(class="form-control") }}<br>
         </div>
         <div>
+            <!-- task description -->
             {{ form.description.label(class="form-label") }}<br>
             <textarea class="form-control" name="description" id="description" rows="5" cols="50">{{ form.description.data if form.description.data else '' }}</textarea><br>
         </div>
         <div>
+            <!-- task start date -->
             {{ form.start_date.label(class="form-label") }}<br>
             <input class="form-control" type="date" name="start_date" id="start_date" value="{{ form.start_date.data.strftime('%Y-%m-%d') if form.start_date.data else '' }}"><br>
         </div>
         <div>
+            <!-- task end date -->
             {{ form.due_date.label(class="form-label") }}<br>
             <input class="form-control" type="date" name="due_date" id="due_date" value="{{ form.due_date.data.strftime('%Y-%m-%d') if form.due_date.data else '' }}"><br>
         </div>

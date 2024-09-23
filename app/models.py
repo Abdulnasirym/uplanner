@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db
 from flask_login import UserMixin
 
-
+# Stores registered user infromation
 class User(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	firstname = db.Column(db.String(64), nullable=False)
@@ -22,6 +22,7 @@ class User(db.Model, UserMixin):
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
+# Stores tasks created by users
 class Task(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	title = db.Column(db.String(100), nullable=False)
@@ -35,6 +36,7 @@ class Task(db.Model):
 	def __repr__(self):
 		return f'<Task {self.title}>'
 
+# Handles reminders for tasks
 class Reminder(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	send_at = db.Column(db.DateTime, nullable=False)

@@ -6,32 +6,40 @@
     <h1>Edit profile</h1>
     
     <form method="POST" action="{{ url_for('auth.edit_profile') }}">
+        <!-- CSRF token -->
         {{ form.hidden_tag() }}
         <div>
+            <!-- firstname -->
             {{ form.firstname.label(class="form-label") }}<br>
             {{ form.firstname(class="form-control") }}<br>
         </div>
         <div>
+            <!--  lastname -->
             {{ form.lastname.label(class="form-label") }}<br>
             {{ form.lastname(class="form-control") }}<br>
         </div>
         <div>
+            <!-- username -->
             {{ form.username.label(class="form-label") }}<br>
             {{ form.username(class="form-control") }}<br>
         </div>
         <div>
+            <!-- email -->
             {{ form.email.label(class="form-label") }}<br>
             {{ form.email(class="form-control") }}<br>
         </div>
         <div>
+            <!-- phone number -->
             {{ form.phone.label(class="form-label") }}<br>
             {{ form.phone(class="form-control") }}<br>
         </div>
         <div class="d-flex justify-content-start align-items-center">
         <a href="{{ url_for('auth.edit_profile') }}">
+            <!-- update profile button -->
         	<button class="btn btn-warning" type="submit" style="margin-right: 10px;">Update profile</button>
         </a>
         <a href="{{ url_for('auth.dashboard') }}">
+            <!-- link to user's dashboard -->
             <button class="btn btn-primary" type="button">Dashboard</button>
         </a>
     </div>

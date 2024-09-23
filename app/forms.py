@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from flask_login import current_user
 from app.models import User
 
+# Registration form
 class Registration(FlaskForm):
 	firstname = StringField('firstname: ', validators=[DataRequired()])
 	lastname = StringField('lastname: ', validators=[DataRequired()])
@@ -14,6 +15,7 @@ class Registration(FlaskForm):
 	confirm_password = PasswordField('Confirm password: ', validators=[DataRequired(), EqualTo('password')])
 	submit = SubmitField('sign Up')
 
+# Edit profile form
 class EditProfileForm(FlaskForm):
 	firstname = StringField('First Name', validators=[DataRequired()])
 	lastname = StringField('Last Name', validators=[DataRequired()])
@@ -22,26 +24,31 @@ class EditProfileForm(FlaskForm):
 	phone = StringField('Phone', validators=[DataRequired()])
 	submit =SubmitField('Update Profile')
 
+	# checks if username exist before editing username
 	def validate_username(self, username):
 		if username.data != current_user.username:
 			user = User.query.filter_by(username=username.data).first()
 			if user:
 				raise ValidationError('Username has already been taken.')
 
+	# checks if email exist before editing email
 	def validate_email(self, email):
 		if email.data != current_user.email:
 			user = User.query.filter_by(email=email.data).first()
 			if user:
 				raise ValidationError('Email already exist')
 
+# login form
 class LoginForm(FlaskForm):
 	username = StringField('Username: ', validators=[DataRequired()])
 	password = PasswordField('Password: ', validators=[DataRequired()])
 	submit = SubmitField('Login')
 
+# logout form
 class LogoutForm(FlaskForm):
 	submit  = SubmitField('Logout')
 
+# task form
 class TaskForm(FlaskForm):
 	title = StringField('Title: ', validators=[DataRequired()])
 	description = StringField('Description: ', validators=[DataRequired()])
