@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-# Load the environment variables
+# Load the environment variable
 load_dotenv()
 
 
