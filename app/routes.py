@@ -8,36 +8,64 @@ from app.utils import send_task_reminder
 from flask_mail import Message
 from datetime import timedelta
 
-
 # Define the blueprint
 auth_bp = Blueprint('auth', __name__)
 
-# Testing email sending functionality
-@auth_bp.route('/dashboard/test-email')
-@login_required
-def task_reminder():
-    subject = "Test Email"
-    recipient = "bitwebtechnologies@gmail.com"
-    
-    try:
-        # Fetch a sample task and reminder date (You can fetch based on your logic)
-        task = Task.query.filter_by(user_id=current_user.id).first()  # Fetch a task for the current user
-        reminder_date = task.due_date - timedelta(days=1)  # Set the reminder date to one day before the due date
+# landing page
+@auth_bp.route('/')
+@auth_bp.route('/home', methods=['GET'])
+def home():
+	return render_template('landing_page.html')
 
-        if task:
-            print("Calling send_email function...")
-            send_task_reminder(current_user, task, reminder_date)  # Pass the task and reminder date
-            print("Email sending function called successfully.")
-            return "Test email sent successfully"
-        else:
-            return "No task found to send reminder."
-    
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return f"An error occurred: {str(e)}"
+# user registration
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+	form = Registration()
+	# ensures content in both password fields match
+	if form.password.data != form.confirm_password.data:
+			flash('Passwords do not match', 'danger')
+			print("Passwords do not match")
+			return redirect(url_for('auth.register'))
 
+	if form.validate_on_submit():
+		# Check if username or email already exist
+		existing_user = User.query.filter_by(username=form.username.data).first()
+		existing_email = User.query.filter_by(email=form.email.data).first()
+		existing_phone = User.query.filter_by(phone=form.phone.data).first()
 
-# User registration route
+		# checks if a user exist with the same username
+		if existing_user:
+			flash('Username already exist, Please choose a different username', 'danger')
+			return redirect(url_for('auth.register'))
+
+		# checks if a user exist with the same email
+		if existing_email:
+			flash('Email already exist. Please use a different email', 'danger')
+			return redirect(url_for('auth.register'))
+
+		# checks if a user exist with the same phone numeber
+		if existing_phone:
+			flash('Phone number already registered. Please use a different phone number', 'danger')
+			return redirect(url_for('auth.register'))
+
+		# hashed password entered by the users
+		hashed_password = generate_password_hash(form.password.data)
+		user = User(
+			firstname=form.firstname.data,
+			lastname=form.lastname.data,
+			username=form.username.data,
+			email=form.email.data,
+			phone=form.phone.data,
+			password_hash=hashed_password
+		)
+		# add user
+		db.session.add(user)
+		# push user to database
+		db.session.commit()
+		flash('Your account has been created', 'success')
+		return redirect(url_for('auth.login'))
+
+	return render_template('register.html', form=form)
 
 # user profile route
 @auth_bp.route('/profile')
@@ -95,61 +123,7 @@ def edit_profile():
 
 	return render_template('edit_profile.html', form=form)
 
-# landing page
-@auth_bp.route('/')
-@auth_bp.route('/home', methods=['GET'])
-def home():
-	return render_template('landing_page.html')
 
-# user registration
-@auth_bp.route('/register', methods=['GET', 'POST'])
-def register():
-	form = Registration()
-	# ensures content in both password fields match
-	if form.password.data != form.confirm_password.data:
-			flash('Passwords do not match', 'danger')
-			print("Passwords do not match")
-			return redirect(url_for('auth.register'))
-
-	if form.validate_on_submit():
-		# Check if username or email already exist
-		existing_user = User.query.filter_by(username=form.username.data).first()
-		existing_email = User.query.filter_by(email=form.email.data).first()
-		existing_phone = User.query.filter_by(phone=form.phone.data).first()
-
-		# checks if a user exist with the same username
-		if existing_user:
-			flash('Username already exist, Please choose a different username', 'danger')
-			return redirect(url_for('auth.register'))
-
-		# checks if a user exist with the same email
-		if existing_email:
-			flash('Email already exist. Please use a different email', 'danger')
-			return redirect(url_for('auth.register'))
-
-		# checks if a user exist with the same phone numeber
-		if existing_phone:
-			flash('Phone number already registered. Please use a different phone number', 'danger')
-			return redirect(url_for('auth.register'))
-
-		# hashed password entered by the users
-		hashed_password = generate_password_hash(form.password.data)
-		user = User(
-			firstname=form.firstname.data,
-			lastname=form.lastname.data,
-			username=form.username.data,
-			email=form.email.data,
-			phone=form.phone.data,
-			password_hash=hashed_password
-		)
-		# add user
-		db.session.add(user)
-		# push user to database
-		db.session.commit()
-		flash('Your account has been created', 'success')
-		return redirect(url_for('auth.login'))
-
-	return render_template('register.html', form=form)
 
 # Adding task route
 @auth_bp.route('/add_task', methods=['GET', 'POST'])
@@ -224,25 +198,6 @@ def delete_task(task_id):
 	flash('Task has been deleted', 'success')
 	return redirect(url_for('auth.dashboard'))
 
-# View task details
-@auth_bp.route('/task/<int:task_id>', methods=['GET', 'POST'])
-@login_required
-def task_details(task_id):
-	task = Task.query.get_or_404(task_id)
-	reminders = Reminder.query.filter_by(task_id=task_id).all()
-	return render_template('tasks_details.html', task=task, reminders=reminders)
-
-# # Deleting reminder
-# @auth_bp.route('/delete-reminder/<int:reminder_id>', methods=['POST', 'GET'])
-# @login_required
-# def delete_reminder(reminder_id):
-# 	reminder = Reminder.query.get_or_404(reminder_id)
-# 	db.session.delete(reminder)
-# 	db.session.commit()
-# 	flash('Reminder deleted successfully!', 'success')
-# 	return redirect(url_for('auth.task_details', task_id=reminder.task_id))
-
-
 # Checkbox route for task completeion
 @auth_bp.route('/toggle_complete/<int:task_id>', methods=['POST'])
 @login_required
@@ -257,6 +212,13 @@ def toggle_complete(task_id):
     flash('Task status updated', 'success')
     return redirect(url_for('auth.dashboard'))
 
+# Dashboard route
+@auth_bp.route('/dashboard')
+@login_required
+def dashboard():
+	form = LogoutForm()
+	tasks = Task.query.filter_by(user_id=current_user.id).all()
+	return render_template('dashboard.html', tasks=tasks, form=form, user=current_user)
 
 # User login route
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -283,12 +245,5 @@ def logout():
 	flash('You have been logged out', 'warning')
 	return redirect(url_for('auth.login'))
 
-# Dashboard route
-@auth_bp.route('/dashboard')
-@login_required
-def dashboard():
-	form = LogoutForm()
-	tasks = Task.query.filter_by(user_id=current_user.id).all()
-	return render_template('dashboard.html', tasks=tasks, form=form, user=current_user)
 
 

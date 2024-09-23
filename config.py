@@ -6,7 +6,7 @@ load_dotenv()
 
 
 class Config():
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///tasks.db'
+	SQLALCHEMY_DATABASE_URI = 'postgres://u83oj88mogp46e:p7e6018c39df66bbca81b167db11cca1b969f01accadd11829b201b3aaa9ceb84@c3nv2ev86aje4j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d58re6f9n1l34u'
 	SQLALCHEMY_TRACK_MODIFICATIONS=False
 	SECRET_KEY = os.environ.get('SECRET_KEY') or 'you_secret_key'
 
