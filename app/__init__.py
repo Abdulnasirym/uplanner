@@ -5,7 +5,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from .celery import make_celery
 
-# Initialize extension
+# Initialize extensions
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
