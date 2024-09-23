@@ -1,12 +1,12 @@
 import os
 from dotenv import load_dotenv
 
-# Load the environment variable
+# Load the environment variables
 load_dotenv()
 
 
 class Config():
-	SQLALCHEMY_DATABASE_URI = 'postgres://u9ncj702d6l168:p4e35cf1552291ac843038d39fadcc5494171818b67d39768994ecdd9648a078d@c3nv2ev86aje4j.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/ddduh2fehsf73o'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///tasks.db'
 	SQLALCHEMY_TRACK_MODIFICATIONS=False
 	SECRET_KEY = os.environ.get('SECRET_KEY') or 'you_secret_key'
 
