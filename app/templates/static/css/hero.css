@@ -8,8 +8,8 @@ body, html {
 /* Custom container for the cover section */
 .custom-container {
   position: relative;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: 100vw; 
+  height: 100vh;/
   background-image: url('../images/landing1.png');
   background-size: cover;
   background-position: center center;
@@ -19,8 +19,12 @@ body, html {
   align-items: center;
   text-align: center;
   color: #fff;
-  margin: 0; /* Remove any margin */
-  padding: 0; /* Remove any padding */
+  margin: 0;
+  padding: 0; 
+}
+
+.cover-image #bt {
+  padding: 15px;
 }
 
 /* Make sure no margin or padding is applied to other parent containers */

@@ -17,13 +17,13 @@ auth_bp = Blueprint('auth', __name__)
 def home():
 	return render_template('landing_page.html')
 
-# # Explore app button
-# @auth_bp.route('/explore')
-# def explore_app():
-# 	if current_user.is_authenticated:
-# 		return redirect(url_for('dashboard'))
-# 	else:
-# 		return redirect(url_for('login'))
+# Explore app button
+@auth_bp.route('/explore')
+def explore_app():
+	if current_user.is_authenticated:
+		return redirect(url_for('auth.dashboard'))
+	else:
+		return redirect(url_for('auth.login'))
 
 
 # user registration
