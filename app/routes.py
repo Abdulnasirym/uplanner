@@ -17,6 +17,15 @@ auth_bp = Blueprint('auth', __name__)
 def home():
 	return render_template('landing_page.html')
 
+# Explore app button
+@auth_bp.route('/explore')
+def explore_app():
+	if current_user.is_authenticated:
+		return redirect(url_for('dashboard'))
+	else:
+		return redirect(url_for('login'))
+
+
 # user registration
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -236,7 +245,6 @@ def login():
 			flash('Invalid username or password', 'danger')
 	return render_template('login.html', form=form)
 
-
 # Logout route
 @auth_bp.route('/logout',methods=['POST','GET'])
 @login_required
@@ -244,6 +252,3 @@ def logout():
 	logout_user()
 	flash('You have been logged out', 'warning')
 	return redirect(url_for('auth.login'))
-
-
-
