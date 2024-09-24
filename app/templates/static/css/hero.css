@@ -42,10 +42,29 @@ body {
   padding: 15px;
   font-weight: 400;
   color: #fff;
-  background-color: #007bff; /* Bootstrap primary color or choose another */
+  background-color: #5eadb0; /* Bootstrap primary color or choose another */
   border-radius: 5px;
   text-transform: uppercase;
   text-decoration: none;
+  border: none;
+}
+
+.custom-container a:hover {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  padding: 15px;
+  font-weight: 400;
+  color: #fff;
+  background-color: #70d5d8; /* Bootstrap primary color or choose another */
+  border-radius: 5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+}
+
+.bt {
+  background-color: #5eadb0;
+  border: none;
 }
 
 /* Make sure no margin or padding is applied to other parent containers */
@@ -81,8 +100,9 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  padding-left: 90px;
-  padding-right: 90px;
+  padding-left: 100px;
+  padding-right: 100px;
+  width: 100vw;
 }
 
 #features .card-body .card-text {
@@ -125,6 +145,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
+  padding-bottom: 100px;
 }
 
 /* login page logo */
@@ -136,7 +157,6 @@ body {
   padding-top: 0px;
   margin-top: 0;
 }
-
 
 /* media query */
 @media (max-width: 768px) {
@@ -165,6 +185,12 @@ body {
     gap: 10px;
   }
 
+  #features {
+    width: 100vw;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
   .features-section h5 {
     font-size: 1rem;
     padding-bottom: 25px;
@@ -174,4 +200,21 @@ body {
     font-size: 0.9rem;
     text-align: left;
   } 
+
+  .footer {
+    text-align: center;
+  }
+
+  /* Dashboard table */
+  .table th {
+    font-size: 0.7rem;
+  }
+
+  .table td {
+    font-size: 15px;
+  }
+
+  .table .btn {
+    font-size: 12px;
+  }
 }
