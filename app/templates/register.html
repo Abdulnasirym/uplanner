@@ -5,6 +5,10 @@
 {% block content %}
 
 <!-- user registration form fields -->
+<br><br>
+<div class="login-logo">
+    <a href="{{ url_for('auth.home') }}"><img src="static/images/logo.svg"></a>
+</div>
 <h2>Register</h2><br>
 	<form method="POST" action="{{ url_for('auth.register') }}">
 		{{ form.hidden_tag() }}

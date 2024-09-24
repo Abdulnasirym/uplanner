@@ -239,10 +239,10 @@ def login():
 		# check is username and password entered match
 		if user and check_password_hash(user.password_hash, form.password.data):
 			login_user(user)
-			flash('Logged in successfully!', 'success')
-			return redirect(url_for('auth.dashboard'))
-		else:
-			flash('Invalid username or password', 'danger')
+			# flash('Logged in successfully!', 'success')
+			return redirect(url_for('auth.home'))
+		# else:
+			# flash('Invalid username or password', 'danger')
 	return render_template('login.html', form=form)
 
 # Logout route
@@ -250,5 +250,5 @@ def login():
 @login_required
 def logout():
 	logout_user()
-	flash('You have been logged out', 'warning')
-	return redirect(url_for('auth.login'))
+	# flash('You have been logged out', 'warning')
+	return redirect(url_for('auth.home'))
