@@ -13,7 +13,7 @@ class Registration(FlaskForm):
 	phone = StringField('Phone: ', validators=[DataRequired()])
 	password = PasswordField('Password: ', validators=[DataRequired()])
 	confirm_password = PasswordField('Confirm password: ', validators=[DataRequired(), EqualTo('password')])
-	submit = SubmitField('sign Up')
+	submit = SubmitField('Sign Up')
 
 # Edit profile form
 class EditProfileForm(FlaskForm):

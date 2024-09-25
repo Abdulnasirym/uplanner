@@ -101,7 +101,6 @@ def edit_profile():
 			flash('Phone number already registered. Please use a different phone number', 'danger')
 			return redirect(url_for('auth.edit_profile'))
 
-
 		# Checks if username is already taken by another user
 		if existing_user:
 			flash('Username already exist, Please choose a different username', 'danger')
@@ -128,11 +127,7 @@ def edit_profile():
 		print("Form Errors:", form.errors)
 
 	print(form.data)
-
-
 	return render_template('edit_profile.html', form=form)
-
-
 
 # Adding task route
 @auth_bp.route('/add_task', methods=['GET', 'POST'])
@@ -241,8 +236,8 @@ def login():
 			login_user(user)
 			# flash('Logged in successfully!', 'success')
 			return redirect(url_for('auth.home'))
-		# else:
-			# flash('Invalid username or password', 'danger')
+		else:
+			flash('Invalid username or password', 'danger')
 	return render_template('login.html', form=form)
 
 # Logout route

@@ -1,10 +1,12 @@
+<br><br>
 {% extends 'base.html' %}
 
-{% block title %}Edit task{% endblock %}
+{% block title %}Edit profile{% endblock %}
 
 {% block content %}
-<br><br>
+
 <h1>Edit profile</h1>
+<br>
 <form method="POST" action="{{ url_for('auth.edit_profile') }}">
     <!-- CSRF token -->
     {{ form.hidden_tag() }}
@@ -34,10 +36,7 @@
         {{ form.phone(class="form-control") }}<br>
     </div>
     <div class="d-flex justify-content-start align-items-center">
-    <a href="{{ url_for('auth.edit_profile') }}">
-        <!-- update profile button -->
-    	<button class="btn btn-warning" type="submit" style="margin-right: 10px;">Update profile</button>
-    </a>
+    <button class="btn bt btn-warning" type="submit" style="margin-right: 10px;">Update profile</button>
     <a href="{{ url_for('auth.dashboard') }}">
         <!-- link to user's dashboard -->
         <button class="btn btn-primary" type="button">Dashboard</button>

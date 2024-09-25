@@ -1,9 +1,9 @@
+<br><br>
 {% extends 'base.html' %}
 
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<br><br>
 <!-- user profile -->
 <div class="card">
   <div class="card-header">
@@ -15,7 +15,7 @@
     <p class="card-text"><strong>Username:</strong> {{ user.username }}</p>
     <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
     <p class="card-text"><strong>Phone number:</strong> {{ user.phone }}</p>
-    <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-secondary">Edit Profile</a>
+    <a href="{{ url_for('auth.edit_profile') }}" class="btn bt btn-secondary">Edit Profile</a>
     <a href="{{ url_for('auth.dashboard') }}" class="btn btn-primary">Dashboard</a>
   </div>
 </div>
