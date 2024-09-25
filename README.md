@@ -139,7 +139,7 @@ Here are some related projects that inspired the Task Planner or are related to 
 ## Author
 
 **Yakubu Abdulnasir Muhammad**  
-- LinkedIn: [Yakubu's LinkedIn](https://www.linkedin.com/in/abdulnasirym/))  
+- LinkedIn: [Yakubu's LinkedIn](https://www.linkedin.com/in/abdulnasirym/) 
 - GitHub: [Your GitHub Profile](https://github.com/abdulnasirym)
 
 ## License
