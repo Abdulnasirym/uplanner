@@ -2,15 +2,6 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-html, body {
-  overflow-x: hidden;
-}
-img, iframe, table {
-  max-width: 100%;
-  height: auto;
-}
-
-
 /* Custom container for the cover section */
 .custom-container {
   position: relative;
