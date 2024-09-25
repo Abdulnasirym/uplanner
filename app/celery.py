@@ -1,3 +1,4 @@
+import os
 from celery import Celery
 from celery.schedules import crontab
 
@@ -25,3 +26,15 @@ def make_celery(app):
 	}
 
 	return celery
+
+# Update Celery configuration to use Redis from the environment variable
+def init_celery(app):
+    app.config.update(
+        CELERY_BROKER_URL=os.getenv('REDIS_URL'),  # Use Heroku-provided Redis URL
+        CELERY_RESULT_BACKEND=os.getenv('REDIS_URL')  # Use Heroku-provided Redis URL
+    )
+
+    # Create the Celery instance with the updated app configuration
+    celery = make_celery(app)
+
+    return celery
