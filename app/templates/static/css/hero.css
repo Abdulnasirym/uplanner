@@ -77,6 +77,12 @@ img, iframe, table {
   color: #fff;
 }
 
+.bt:hover {
+  background-color: #5eadb0;
+  border: none;
+  color: #fff;
+}
+
 /* Make sure no margin or padding is applied to other parent containers */
 .custom-container.mt-4 {
   margin-top: 0 !important;
